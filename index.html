@@ -2,14 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Be My Valentine 💖</title>
+  <title>For Vanshika 💖</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+
   <style>
     body {
       margin: 0;
       height: 100vh;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      background: linear-gradient(135deg, #fdeff2, #f9c5d1);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -19,42 +23,67 @@
 
     .card {
       background: white;
-      padding: 40px 30px;
-      border-radius: 20px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-      max-width: 340px;
+      padding: 50px 40px;
+      border-radius: 28px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+      max-width: 380px;
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(25px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     h1 {
-      color: #ff4d6d;
-      margin-bottom: 25px;
+      font-family: 'Playfair Display', serif;
+      color: #e63956;
+      margin-bottom: 15px;
+      font-size: 30px;
+    }
+
+    p {
+      color: #555;
+      margin-bottom: 30px;
+      font-size: 15px;
+    }
+
+    .pandas {
+      font-size: 28px;
+      margin-bottom: 20px;
     }
 
     .buttons {
       position: relative;
-      height: 140px;
+      height: 150px;
     }
 
     button {
-      padding: 14px 26px;
+      padding: 14px 30px;
       border-radius: 30px;
       border: none;
       font-size: 16px;
       cursor: pointer;
       transition: all 0.3s ease;
       position: absolute;
+      font-weight: 500;
     }
 
     #yes {
-      background: #ff4d6d;
+      background: #e63956;
       color: white;
       left: 50%;
       transform: translateX(-50%);
+      box-shadow: 0 12px 25px rgba(230,57,86,0.35);
+    }
+
+    #yes:hover {
+      transform: translateX(-50%) scale(1.06);
     }
 
     #no {
-      background: #ddd;
-      top: 70px;
+      background: #eee;
+      top: 85px;
       left: 50%;
       transform: translateX(-50%);
     }
@@ -62,24 +91,46 @@
     .message {
       display: none;
       font-size: 22px;
-      color: #ff4d6d;
+      color: #e63956;
       margin-top: 25px;
+      font-weight: 600;
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      top: -10px;
+      animation: fall 3s linear infinite;
+      opacity: 0.85;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+      }
     }
   </style>
 </head>
 <body>
 
   <div class="card">
-    <h1>Will you be my Valentine? 💘</h1>
+    <div class="pandas">🐼🐼</div>
+
+    <h1>Vanshika</h1>
+    <p>I made this just for you 🌸</p>
+
+    <h1>Will you be my Valentine? 💖</h1>
 
     <div class="buttons">
-      <button id="yes">Yes 💖</button>
-      <button id="no">No 😢</button>
+      <button id="yes">Yes 💕</button>
+      <button id="no">No 🙈</button>
     </div>
 
     <div class="message" id="message">
-      YAYYYY!! 💕<br>
-      I knew you’d say yes 🥰
+      You just made this panda very happy 🐼💖
     </div>
   </div>
 
@@ -89,14 +140,14 @@
     const message = document.getElementById("message");
 
     const noTexts = [
-      "No 😢",
-      "Wait… what?",
-      "Are you sure? 😳",
-      "This feels illegal 😭",
-      "Please don’t 😔",
-      "Okay stop trying 😂",
-      "I’m getting scared",
-      "Fine. I give up 😭💔"
+      "No 🙈",
+      "Hmm… really?",
+      "Think again 😳",
+      "That’s illegal 🫣",
+      "Pleaseee 🥺",
+      "I’m panicking 😭",
+      "Okay fine 😤",
+      "YES 💖"
     ];
 
     let count = 0;
@@ -104,15 +155,16 @@
     noBtn.addEventListener("mouseover", () => {
       count++;
 
-      const x = Math.random() * 220 - 110;
-      const y = Math.random() * 100 - 50;
-      noBtn.style.transform = `translate(${x}px, ${y}px) scale(${1 - count * 0.05})`;
+      const x = Math.random() * 240 - 120;
+      const y = Math.random() * 120 - 60;
+
+      noBtn.style.transform =
+        `translate(${x}px, ${y}px) scale(${Math.max(0.6, 1 - count * 0.05)})`;
 
       noBtn.innerText = noTexts[Math.min(count, noTexts.length - 1)];
 
-      if (count > 6) {
-        noBtn.innerText = "I choose YES 💖";
-        noBtn.style.background = "#ff4d6d";
+      if (count >= 7) {
+        noBtn.style.background = "#e63956";
         noBtn.style.color = "white";
       }
     });
@@ -125,7 +177,30 @@
       message.style.display = "block";
       yesBtn.style.display = "none";
       noBtn.style.display = "none";
+      launchConfetti();
     });
+
+    function launchConfetti() {
+      for (let i = 0; i < 120; i++) {
+        const confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.background =
+          ["#e63956", "#f1a7b8", "#fdeff2", "#f9c5d1"]
+          [Math.floor(Math.random() * 4)];
+
+        confetti.style.animationDuration =
+          (Math.random() * 2 + 2) + "s";
+
+        confetti.style.width =
+        confetti.style.height =
+          Math.random() * 8 + 6 + "px";
+
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 4000);
+      }
+    }
   </script>
 
 </body>
