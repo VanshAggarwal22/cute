@@ -86,6 +86,7 @@
       top: 85px;
       left: 50%;
       transform: translateX(-50%);
+      cursor: not-allowed;
     }
 
     .message {
@@ -130,7 +131,7 @@
     </div>
 
     <div class="message" id="message">
-      You just made this donkey very happy 🐼💖
+      You just made this panda very happy 🐼💖
     </div>
   </div>
 
@@ -141,17 +142,18 @@
 
     const noTexts = [
       "No 🙈",
-      "Hmm… really?",
-      "Think again 😳",
-      "That’s illegal 🫣",
-      "Pleaseee 🥺",
-      "I’m panicking 😭",
-      "Okay fine 😤",
+      "Nice try 😌",
+      "Not allowed 😳",
+      "Still no? 👀",
+      "This button is fake 😭",
+      "Give up 😂",
+      "Okay okay 😤",
       "YES 💖"
     ];
 
     let count = 0;
 
+    // Hover fun (but click disabled)
     noBtn.addEventListener("mouseover", () => {
       count++;
 
@@ -169,8 +171,10 @@
       }
     });
 
-    noBtn.addEventListener("click", () => {
-      yesBtn.click();
+    // Completely disable click
+    noBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
     });
 
     yesBtn.addEventListener("click", () => {
